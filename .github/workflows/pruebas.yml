@@ -1,0 +1,36 @@
+# Ejecuta las pruebas automáticas de Laravel en GitHub cada vez que se sube código
+# a la rama principal o se abre/actualiza un pull request hacia ella.
+name: Pruebas automáticas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  pruebas:
+    name: Pruebas (php artisan test)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_sqlite, sqlite3, fileinfo, gd
+          coverage: none
+
+      - name: Instalar dependencias con Composer
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Crear el archivo .env y la clave de la aplicación
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Ejecutar las pruebas
+        run: php artisan test
