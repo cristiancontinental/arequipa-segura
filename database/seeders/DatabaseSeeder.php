@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
 
         $taxis = Categoria::firstOrCreate(['nombre' => 'Falsos taxis']);
         $robos = Categoria::firstOrCreate(['nombre' => 'Robos en viviendas']);
+        $incendios = Categoria::firstOrCreate(['nombre' => 'Incendios']);
 
         if (ContactoEmergencia::count() === 0) {
             ContactoEmergencia::insert([
