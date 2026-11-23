@@ -37,16 +37,19 @@ class DatabaseSeeder extends Seeder
         $incendios = Categoria::firstOrCreate(['nombre' => 'Incendios']);
 
         if (ContactoEmergencia::count() === 0) {
-            ContactoEmergencia::insert([
+                        ContactoEmergencia::insert([
                 ['situacion' => 'incendio', 'servicio' => 'Bomberos', 'telefono' => '116',
                     'instruccion' => 'Aléjate del lugar y llama a los Bomberos.', 'activo' => true],
                 ['situacion' => 'violencia_familiar', 'servicio' => 'Línea 100 (Ministerio de la Mujer)', 'telefono' => '100',
                     'instruccion' => 'Si estás en peligro inmediato, busca un lugar seguro y llama.', 'activo' => true],
                 ['situacion' => 'peligro_taxi', 'servicio' => 'Policía Nacional', 'telefono' => '105',
                     'instruccion' => 'Si es posible, comparte tu ubicación con alguien de confianza (botón SOS).', 'activo' => true],
+                ['situacion' => 'robo_vivienda', 'servicio' => 'Policía Nacional', 'telefono' => '105',
+                    'instruccion' => 'No te enfrentes a los delincuentes; resguárdate y llama al 105.', 'activo' => true],
                 ['situacion' => 'otra', 'servicio' => 'Salud (SAMU)', 'telefono' => '106',
                     'instruccion' => 'Para emergencias médicas.', 'activo' => true],
             ]);
+
         }
 
         if (app()->environment('local') && Incidente::count() === 0) {

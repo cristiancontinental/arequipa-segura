@@ -20,9 +20,10 @@ class InicioController extends Controller
     {
         $grupos = $this->emergencias->agrupadosPorSituacion();
 
-        // Un contacto activo por situación, en el orden en que se muestran en pantalla.
-        $rapidos = collect(['incendio', 'peligro_taxi', 'violencia_familiar'])
+                // Un contacto activo por situación, en el orden en que se muestran en pantalla.
+        $rapidos = collect(['incendio', 'peligro_taxi', 'violencia_familiar', 'robo_vivienda'])
             ->map(function (string $situacion) use ($grupos) {
+
                 $contacto = $grupos->get($situacion)?->first();
 
                 return $contacto ? ['situacion' => $situacion, 'contacto' => $contacto] : null;

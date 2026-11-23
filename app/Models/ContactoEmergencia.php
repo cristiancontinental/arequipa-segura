@@ -9,11 +9,13 @@ class ContactoEmergencia extends Model
 {
     /** Situaciones disponibles y su etiqueta para la interfaz. */
     public const SITUACIONES = [
-        'incendio' => 'Incendio',
-        'violencia_familiar' => 'Violencia familiar',
-        'peligro_taxi' => 'Peligro durante un taxi',
-        'otra' => 'Otras ayudas',
-    ];
+    'incendio' => 'Incendio',
+    'violencia_familiar' => 'Violencia familiar',
+    'peligro_taxi' => 'Peligro durante un taxi',
+    'robo_vivienda' => 'Robo en vivienda',
+    'otra' => 'Otras ayudas',
+];
+
 
     protected $table = 'contactos_emergencia';
 
