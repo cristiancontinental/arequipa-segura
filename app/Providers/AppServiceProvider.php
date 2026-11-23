@@ -11,7 +11,7 @@ use App\Repositories\EloquentEvidenciaRepository;
 use App\Repositories\EloquentIncidenteRepository;
 use App\Repositories\EloquentModeracionRepository;
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\URL;
 /**
  * Registra en el contenedor de servicios de Laravel qué implementación
  * concreta corresponde a cada contrato de repositorio.
@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }
