@@ -55,5 +55,26 @@
     </footer>
 
     @stack('scripts')
+
+        <button type="button" id="btn-iniciar-tour" class="boton-flotante-ayuda" aria-label="Abrir guía interactiva">
+        ? Guía rápida
+    </button>
+
+    <div id="tour-overlay" class="tour-overlay" hidden>
+        <div class="tour-tarjeta" role="dialog" aria-modal="true" aria-labelledby="tour-titulo">
+            <button type="button" id="tour-cerrar" class="tour-cerrar" aria-label="Cerrar guía">&times;</button>
+            <span id="tour-contador" class="tour-contador">1 / 4</span>
+            <h3 id="tour-titulo"></h3>
+            <p id="tour-texto"></p>
+            <div class="tour-controles">
+                <button type="button" id="tour-anterior" class="boton">Anterior</button>
+                <button type="button" id="tour-siguiente" class="boton boton-azul">Siguiente</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('js/tour.js') }}" defer></script>
+</body>
+
 </body>
 </html>

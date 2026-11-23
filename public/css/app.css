@@ -1,17 +1,18 @@
-
 :root {
-    --azul: #62516F;
-    --azul-oscuro: #30283D;
-    --turquesa: #897493;
-    --naranja: #A66F83;
-    --rojo: #B94B5B;
-    --verde: #668775;
-    --gris: #625B69;
-    --negro: #30283D;
-    --fondo: #F5F0F6;
-    --borde: #E3D9E8;
+    --azul: #3F4259;
+    --azul-oscuro: #2B2D3E;
+    --turquesa: #989FCE;
+    --naranja: #6E75A8;
+    --rojo: #7E6B9E;
+    --verde: #5B638E;
+    --gris: #5A5D72;
+    --negro: #232533;
+    --fondo: #F6F6FA;
+    --borde: #DCDCEB;
     --blanco: #FFFFFF;
 }
+
+
 
 /* CONFIGURACIÓN GENERAL */
 
@@ -388,17 +389,17 @@ details summary {
     width: 100%;
     min-height: 210px;
     padding: 25px;
-    background: #e8dce9;
-    border: 2px solid #c9b3ce;
+    background: #ececf5;
+    border: 2px solid #c7c9e2;
     border-radius: 18px;
-    box-shadow: 0 4px 12px rgba(73, 53, 79, 0.12);
+    box-shadow: 0 4px 12px rgba(43, 45, 62, 0.10);
     text-align: center;
 }
 
 .emergencias-grid .tarjeta-emergencia h2 {
     font-size: 27px;
     font-weight: 600;
-    color: #49354f;
+    color: var(--azul-oscuro);
     margin: 0 0 12px;
 }
 
@@ -409,7 +410,7 @@ details summary {
 .emergencias-grid .telefono-emergencia {
     font-size: 25px;
     font-weight: 800;
-    color: #a83250;
+    color: var(--azul);
     letter-spacing: 1px;
     margin: 12px 0;
 }
@@ -431,19 +432,19 @@ details summary {
 }
 
 .tarjeta-emergencia {
-    background: #f5f0f5;
-    border: 1px solid #dfd1e1;
+    background: #f2f2f9;
+    border: 1px solid #d5d6ea;
     border-radius: 14px;
     padding: 15px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    box-shadow: 0 3px 10px rgba(50, 30, 55, 0.07);
+    box-shadow: 0 3px 10px rgba(43, 45, 62, 0.07);
 }
 
 .tarjeta-emergencia h3 {
     margin: 0;
-    color: #49354f;
+    color: var(--azul-oscuro);
     font-size: 23px;
     font-weight: 600;
 }
@@ -453,14 +454,14 @@ details summary {
     height: 38px;
     display: grid;
     place-items: center;
-    background: #eadde9;
-    color: #9d354e;
+    background: #e3e4f2;
+    color: var(--azul);
     border-radius: 10px;
     font-size: 21px;
 }
 
 .telefono-emergencia {
-    color: #65566a;
+    color: var(--gris);
     font-size: 16px;
     font-weight: 400;
     margin: 0;
@@ -470,6 +471,7 @@ details summary {
     width: 100%;
     text-align: center;
 }
+
 
 /* BOTÓN SOS */
 
@@ -648,4 +650,121 @@ th {
     .pie {
         padding: 20px 16px;
     }
+}
+
+[hidden] { display: none !important; }
+
+/* Llamada rapida en la pantalla de inicio */
+.llamada-rapida { max-width: 950px; margin: 10px auto 25px; }
+.llamada-rapida h2 { font-size: 1.3rem; margin-bottom: 12px; }
+.llamada-rapida .boton { width: 100%; min-height: 64px; margin-bottom: 12px; font-size: 1.1rem; }
+
+/* Formulario de reporte por pasos */
+.paso { border: 1px solid #dfd1e1; border-radius: 14px; padding: 14px 16px 16px; margin: 16px 0; background: #f9f6f9; text-align: left; }
+.paso legend { font-weight: 800; font-size: 1.15rem; padding: 0 8px; }
+.categorias { display: grid; gap: 10px; }
+.categoria-opcion { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 12px 14px; border: 2px solid #cfc3d3; border-radius: 12px; background: #fff; cursor: pointer; font-weight: 700; margin: 0; }
+.categoria-opcion input { width: 22px; height: 22px; flex: none; margin: 0; }
+.categoria-opcion:has(input:checked) { border-color: var(--rojo); background: #fff1f1; }
+.solo-lectores { position: absolute; left: -9999px; }
+.afinar { margin: 14px 0; text-align: left; }
+.afinar summary { cursor: pointer; font-weight: 700; padding: 12px 0; min-height: 48px; }
+#mapa-reporte { height: 38vh; min-height: 260px; }
+
+
+/* Tour interactivo paso a paso */
+.boton-flotante-ayuda {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1900;
+    padding: 0.7rem 1.1rem;
+    background: #1e293b;
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.tour-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    z-index: 2000;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.tour-overlay[hidden] {
+    display: none;
+}
+
+.tour-resaltado {
+    position: relative;
+    z-index: 1999;
+    outline: 4px solid #38bdf8;
+    outline-offset: 4px;
+    box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.35);
+}
+
+.tour-tarjeta {
+    position: relative;
+    z-index: 2002;
+    width: 100%;
+    max-width: 440px;
+    background: #ffffff;
+    color: #0f172a;
+    border-radius: 14px;
+    padding: 1.25rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+.tour-cerrar {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.85rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.tour-contador {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #2563eb;
+    margin-bottom: 0.25rem;
+}
+
+.tour-tarjeta h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+}
+
+.tour-tarjeta p {
+    margin: 0 0 1rem;
+    line-height: 1.45;
+}
+
+.tour-controles {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+#tour-anterior {
+    background: #64748b;
+    color: #ffffff;
+}
+
+.tour-controles .boton:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
 }

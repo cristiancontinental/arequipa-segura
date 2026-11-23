@@ -70,7 +70,7 @@ Los reportes de ejemplo solo se crean si `APP_ENV=local`.
 php artisan test
 ```
 
-Son 24 pruebas (usan SQLite en memoria; no tocan la base de datos MySQL). Cubren: envío de reportes sin cuenta,
+Son 27 pruebas (usan SQLite en memoria; no tocan la base de datos MySQL). Cubren: envío de reportes sin cuenta,
 validación en el servidor, rechazo de archivos que no son imágenes, redirección al login, autorización por roles,
 usuarios desactivados, moderación (aprobar, rechazar, eliminar), CRUD de categorías, vencimiento a 7 días, mapa solo
 con alertas vigentes, prevención de XSS (texto con `<script>` escapado), entrada con comilla (SQL) y módulo de
