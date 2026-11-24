@@ -1,7 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const ruta = window.location.pathname;
+    const esPanel = ruta.startsWith('/panel');
+    const esAdmin = ruta.startsWith('/admin');
+    const esLogin = ruta.startsWith('/ingresar');
     const esMapa = document.querySelector('#mapa') !== null;
-    const esReporte = document.querySelector('form textarea') !== null;
+    const esReporte = document.querySelector('form textarea') !== null && !esPanel && !esAdmin;
     const esEmergencia = document.querySelector('a[href^="tel:"]') !== null && !document.querySelector('#tour-mapa');
+
 
     const pasosInicio = [
         {
@@ -31,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
+
     const pasosMapa = [
         {
             selector: 'header',
@@ -58,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             texto: 'Si ves un reporte falso, ofensivo o con datos personales, abre esta opción para enviarlo a revisión del moderador.'
         }
     ];
+
 
     const pasosReporte = [
         {
@@ -92,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
+
     const pasosEmergencia = [
         {
             selector: 'header',
@@ -108,13 +116,80 @@ document.addEventListener('DOMContentLoaded', () => {
             titulo: '3. Compartir ubicación SOS',
             texto: 'Aquí puedes guardar un número de confianza en tu teléfono y compartir tu ubicación GPS una sola vez por WhatsApp o SMS.'
         }
-
     ];
+
+
+    const pasosPanel = [
+        {
+            selector: 'header nav',
+            titulo: '1. Navegación del equipo',
+            texto: 'Desde aquí accedes al panel de Moderación y, si eres administrador, a Categorías, Contactos y Usuarios.'
+        },
+        {
+            selector: 'main h1 + *',
+            titulo: '2. Filtros por estado',
+            texto: 'Alterna entre reportes Pendientes, Aprobados, Rechazados, Vencidos o Todos para priorizar los que esperan revisión.'
+        },
+        {
+            selector: 'main table, main form',
+            titulo: '3. Revisión y decisión',
+            texto: 'Pulsa "Revisar" para verificar la descripción, evidencia y ubicación aproximada antes de aprobar o rechazar una alerta.'
+        },
+        {
+            selector: 'header form button',
+            titulo: '4. Cierre de sesión seguro',
+            texto: 'Al terminar tu turno de moderación, usa "Salir" para cerrar tu sesión y proteger el acceso al panel.'
+        }
+    ];
+
+
+    const pasosAdmin = [
+        {
+            selector: 'header nav',
+            titulo: '1. Panel de administración',
+            texto: 'Usa estas pestañas para gestionar las Categorías de incidentes, los Contactos de emergencia y las cuentas de Usuarios.'
+        },
+        {
+            selector: 'main a, main button[type="submit"]',
+            titulo: '2. Crear o actualizar registros',
+            texto: 'Usa los botones de acción para agregar nuevos contactos de ayuda, categorías o cuentas de moderadores.'
+        },
+        {
+            selector: 'main table, main form',
+            titulo: '3. Control y auditoría',
+            texto: 'Revisa los registros activos o edita sus datos. Los cambios se reflejan de inmediato en la aplicación ciudadana.'
+        }
+    ];
+
+
+    const pasosLogin = [
+        {
+            selector: 'main form',
+            titulo: '1. Acceso exclusivo autorizado',
+            texto: 'Este ingreso es solo para moderadores y administradores registrados. Los ciudadanos reportan sin necesidad de cuenta.'
+        },
+        {
+            selector: 'main form button[type="submit"]',
+            titulo: '2. Protección de sesión',
+            texto: 'Por seguridad, tras 5 intentos fallidos el sistema bloquea temporalmente el acceso.'
+        }
+    ];
+
 
     let pasos = pasosInicio;
     let claveStorage = 'arequipa_tour_visto';
 
-    if (esMapa) {
+
+    if (esPanel) {
+        pasos = pasosPanel;
+        claveStorage = 'arequipa_tour_panel_visto';
+    } else if (esAdmin) {
+        pasos = pasosAdmin;
+        claveStorage = 'arequipa_tour_admin_visto';
+    } else if (esLogin) {
+        pasos = pasosLogin;
+        claveStorage = 'arequipa_tour_login_visto';
+    } else if (esMapa) {
         pasos = pasosMapa;
         claveStorage = 'arequipa_tour_mapa_visto';
     } else if (esReporte) {
@@ -125,9 +200,11 @@ document.addEventListener('DOMContentLoaded', () => {
         claveStorage = 'arequipa_tour_emergencia_visto';
     }
 
+
     const overlay = document.getElementById('tour-overlay');
     const btnIniciar = document.getElementById('btn-iniciar-tour');
     if (!overlay || !btnIniciar) return;
+
 
     const btnCerrar = document.getElementById('tour-cerrar');
     const btnAnterior = document.getElementById('tour-anterior');
@@ -136,28 +213,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const elTexto = document.getElementById('tour-texto');
     const elContador = document.getElementById('tour-contador');
 
+
     let indice = 0;
+
 
     function limpiarResaltado() {
         document.querySelectorAll('.tour-resaltado').forEach(el => el.classList.remove('tour-resaltado'));
     }
+
 
     function mostrarPaso(i) {
         limpiarResaltado();
         const paso = pasos[i];
         const objetivo = document.querySelector(paso.selector);
 
+
         if (objetivo) {
             objetivo.classList.add('tour-resaltado');
             objetivo.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
+
         elTitulo.textContent = paso.titulo;
         elTexto.textContent = paso.texto;
-        elContador.textContent = `${i + 1} / ${pasos.length}`;
+        elContador.textContent = ${i + 1} / ${pasos.length};
         btnAnterior.disabled = i === 0;
         btnSiguiente.textContent = i === pasos.length - 1 ? 'Finalizar' : 'Siguiente';
     }
+
 
     function abrirTour() {
         indice = 0;
@@ -165,14 +248,17 @@ document.addEventListener('DOMContentLoaded', () => {
         mostrarPaso(indice);
     }
 
+
     function cerrarTour() {
         limpiarResaltado();
         overlay.hidden = true;
         localStorage.setItem(claveStorage, '1');
     }
 
+
     btnIniciar.addEventListener('click', abrirTour);
     btnCerrar.addEventListener('click', cerrarTour);
+
 
     btnAnterior.addEventListener('click', () => {
         if (indice > 0) {
@@ -180,6 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mostrarPaso(indice);
         }
     });
+
 
     btnSiguiente.addEventListener('click', () => {
         if (indice < pasos.length - 1) {
@@ -189,5 +276,4 @@ document.addEventListener('DOMContentLoaded', () => {
             cerrarTour();
         }
     });
-
 });
