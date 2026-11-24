@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         elTitulo.textContent = paso.titulo;
         elTexto.textContent = paso.texto;
-        elContador.textContent = '${i + 1} / ${pasos.length}';
+        elContador.textContent = (i + 1) + ' / ' + pasos.length;
         btnAnterior.disabled = i === 0;
         btnSiguiente.textContent = i === pasos.length - 1 ? 'Finalizar' : 'Siguiente';
     }
