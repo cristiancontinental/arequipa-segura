@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', InicioController::class)->name('inicio');
 Route::get('/mapa', [MapaController::class, 'index'])->name('mapa');
-Route::get('/api/alertas', [MapaController::class, 'datos'])->name('api.alertas');
+Route::get('/mapa/datos', [MapaController::class, 'datos'])
+    ->name('api.alertas');
 Route::get('/reportar', [ReporteController::class, 'create'])->name('reportes.create');
 Route::post('/reportar', [ReporteController::class, 'store'])->middleware('throttle:5,1')->name('reportes.store');
 Route::post('/alertas/{incidente}/inapropiado', [ContenidoInapropiadoController::class, 'store'])
